@@ -76,3 +76,134 @@ This removes the need for XML configuration and simplifies development.
 - If **dynamic** → Passed to the **web container**.  
 - Web container checks `web.xml` or **annotations** → Finds the right **Servlet**.  
 - Servlet processes the request → Sends back a **dynamic response**.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 🚀 Java Servlet Example with `web.xml`
+
+This project demonstrates how to create a **Java Servlet** and configure it with `web.xml` using Eclipse and Tomcat.
+
+---
+
+## 🛠 Step 1: Create a Dynamic Web Project
+
+1. In Eclipse:
+   **File → New → Dynamic Web Project**
+2. Enter a project name (e.g., `ServletDemo`).
+3. Select your **Target Runtime** (Apache Tomcat).
+4. Finish.
+
+> Eclipse generates the project structure with `WebContent/WEB-INF/web.xml`.
+
+---
+
+## 🛠 Step 2: Create a Servlet
+
+Create a new Servlet class:
+
+```java
+package com.example;
+
+import java.io.IOException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public class HelloServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Set response type
+        response.setContentType("text/html");
+
+        // Write HTML response
+        response.getWriter().println("<h1>Hello from Servlet!</h1>");
+    }
+}
+```
+
+---
+
+## 🛠 Step 3: Configure `web.xml`
+
+Define servlet mapping inside `WebContent/WEB-INF/web.xml`:
+
+```xml
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <!-- Define Servlet -->
+    <servlet>
+        <servlet-name>HelloServlet</servlet-name>
+        <servlet-class>com.example.HelloServlet</servlet-class>
+    </servlet>
+
+    <!-- Map Servlet to URL -->
+    <servlet-mapping>
+        <servlet-name>HelloServlet</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+
+</web-app>
+```
+
+---
+
+## 🛠 Step 4: Run on Tomcat
+
+1. Right-click the project → **Run As → Run on Server**.
+2. Select **Tomcat**.
+3. Open in browser:
+
+```bash
+http://localhost:8080/ServletDemo/hello
+```
+
+> You should see: **Hello from Servlet!**
+
+---
+
+## 📌 Summary
+
+* **Servlet** = Java class extending `HttpServlet`.
+* **web.xml** = Deployment descriptor mapping URL → Servlet class.
+* Example: `/hello` → `HelloServlet`.
+
+---
+
+## ⚡ Alternative (Servlet 3.0+ with Annotations)
+
+Instead of `web.xml`, you can use annotations:
+
+```java
+import jakarta.servlet.annotation.WebServlet;
+
+@WebServlet("/hello")
+public class HelloServlet extends HttpServlet {
+    // same code as before
+}
+```
