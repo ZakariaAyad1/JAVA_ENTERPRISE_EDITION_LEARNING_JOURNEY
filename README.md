@@ -341,3 +341,70 @@ You should see the message from `SecondServlet`: **"Second Servlet says: Hello f
 * Pass data between servlets using **request attributes**.
 * This demonstrates a common technique in **MVC architecture** where a controller servlet forwards requests to views (JSP or another servlet).
 
+
+
+
+
+
+
+# README: Understanding HttpServletRequest and HttpServletResponse
+
+## Overview
+
+This part of the project explains how **HttpServletRequest** and **HttpServletResponse** objects are used in Java Servlets to handle client requests and generate server responses.
+
+## HttpServletRequest
+
+* Represents the **client's request** to the server.
+* Provides methods to read:
+
+  * **Parameters:** `request.getParameter("paramName")`
+  * **Attributes:** `request.setAttribute("key", value)` and `request.getAttribute("key")`
+  * **Headers:** `request.getHeader("headerName")`
+  * **Session info:** `request.getSession()`
+* Example:
+
+```java
+String name = request.getParameter("username");
+request.setAttribute("greeting", "Hello " + name);
+```
+
+## HttpServletResponse
+
+* Represents the **server's response** to the client.
+* Provides methods to send:
+
+  * **HTML content:** `response.getWriter().println("<h1>Hello</h1>");`
+  * **Set content type:** `response.setContentType("text/html");`
+  * **Redirect:** `response.sendRedirect("url");`
+* Example:
+
+```java
+response.setContentType("text/html");
+response.getWriter().println("<h1>Welcome to Servlet</h1>");
+```
+
+## Typical Servlet Usage
+
+```java
+@Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException {
+
+    // Read parameter from request
+    String user = request.getParameter("user");
+
+    // Set response content type
+    response.setContentType("text/html");
+
+    // Write response
+    response.getWriter().println("<h1>Hello, " + user + "!</h1>");
+}
+```
+
+## Notes
+
+* `HttpServletRequest` is used to **fetch client data**.
+* `HttpServletResponse` is used to **send server data**.
+* These two objects are automatically passed by the **web container** (like Tomcat) when a servlet handles a request.
+
