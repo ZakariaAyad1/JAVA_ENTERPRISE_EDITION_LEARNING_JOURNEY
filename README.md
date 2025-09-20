@@ -207,3 +207,137 @@ public class HelloServlet extends HttpServlet {
     // same code as before
 }
 ```
+
+
+
+
+
+
+
+
+
+
+# README: Using RequestDispatcher to Call a Servlet from Another Servlet
+
+## Overview
+
+This project demonstrates how to use **RequestDispatcher** in Java Servlets to forward a request from one servlet to another or include content from another servlet.
+
+## Features
+
+* Forward a request from `FirstServlet` to `SecondServlet`.
+* Pass data between servlets using request attributes.
+* Understand the difference between **forward** and **include**.
+
+## Project Structure
+
+```
+ServletDispatcherDemo/
+├── src/
+│   └── com/example/
+│       ├── FirstServlet.java
+│       └── SecondServlet.java
+├── WebContent/
+│   ├── WEB-INF/
+│   │   └── web.xml
+│   └── index.html (optional)
+```
+
+## Servlet Code
+
+### FirstServlet.java
+
+```java
+package com.example;
+
+import java.io.IOException;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+
+public class FirstServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Set an attribute to pass data
+        request.setAttribute("message", "Hello from FirstServlet");
+
+        // Forward the request to SecondServlet
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/second");
+        dispatcher.forward(request, response);
+    }
+}
+```
+
+### SecondServlet.java
+
+```java
+package com.example;
+
+import java.io.IOException;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+
+public class SecondServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Retrieve attribute from FirstServlet
+        String message = (String) request.getAttribute("message");
+
+        // Display response
+        response.setContentType("text/html");
+        response.getWriter().println("<h1>Second Servlet says: " + message + "</h1>");
+    }
+}
+```
+
+## web.xml Configuration
+
+```xml
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <!-- First Servlet -->
+    <servlet>
+        <servlet-name>FirstServlet</servlet-name>
+        <servlet-class>com.example.FirstServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FirstServlet</servlet-name>
+        <url-pattern>/first</url-pattern>
+    </servlet-mapping>
+
+    <!-- Second Servlet -->
+    <servlet>
+        <servlet-name>SecondServlet</servlet-name>
+        <servlet-class>com.example.SecondServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SecondServlet</servlet-name>
+        <url-pattern>/second</url-pattern>
+    </servlet-mapping>
+
+</web-app>
+```
+
+## How to Run
+
+1. Import the project into Eclipse as a **Dynamic Web Project**.
+2. Make sure you have a **Tomcat server** configured in Eclipse.
+3. Right-click the project → **Run As → Run on Server**.
+4. Access the URL: `http://localhost:8080/ServletDispatcherDemo/first`.
+
+You should see the message from `SecondServlet`: **"Second Servlet says: Hello from FirstServlet"**
+
+## Notes
+
+* Use `dispatcher.forward()` to **forward** requests (control passes to another servlet, URL unchanged).
+* Use `dispatcher.include()` to **include** content from another servlet (both outputs are combined).
+* Pass data between servlets using **request attributes**.
+* This demonstrates a common technique in **MVC architecture** where a controller servlet forwards requests to views (JSP or another servlet).
+
