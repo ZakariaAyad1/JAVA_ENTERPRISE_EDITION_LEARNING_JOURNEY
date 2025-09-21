@@ -408,3 +408,55 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 * `HttpServletResponse` is used to **send server data**.
 * These two objects are automatically passed by the **web container** (like Tomcat) when a servlet handles a request.
 
+
+
+
+
+
+
+
+
+
+
+# JSP with JSTL (JavaServer Pages Standard Tag Library)
+
+## 📌 Introduction
+The **JavaServer Pages Standard Tag Library (JSTL)** is a collection of ready-to-use tags that simplifies JSP development.  
+Instead of embedding raw Java code in JSP pages, JSTL provides standard tags for **logic, loops, formatting, internationalization, and database access**.  
+This makes JSP pages **cleaner, reusable, and easier to maintain**.
+
+---
+
+## 🚀 Features
+- ✅ Replace Java scriptlets (`<% %>`) with XML-like tags  
+- ✅ Provides core tags for loops and conditions  
+- ✅ Formatting for dates, numbers, and internationalization (i18n)  
+- ✅ Functions for string manipulation  
+- ✅ Simple database (SQL) access for demos  
+- ✅ XML parsing and transformation  
+
+---
+
+## 📂 JSTL Libraries
+JSTL is divided into several tag libraries:
+
+1. **Core Tags (`c`)**
+   - Flow control (`if`, `choose`, `forEach`)
+   - Importing URLs
+   - Setting and removing variables
+
+2. **Formatting Tags (`fmt`)**
+   - Formatting dates and numbers
+   - Localization and resource bundles
+
+3. **SQL Tags (`sql`)**
+   - Running SQL queries (⚠️ for learning/demo only)
+
+4. **XML Tags (`x`)**
+   - Parsing and processing XML
+
+5. **Functions (`fn`)**
+   - String manipulation (`length`, `contains`, `substring`, etc.)
+
+---
+
